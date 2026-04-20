@@ -16,11 +16,11 @@ final class Note {
     var createdAt: Date
     var weather: Weather
 
-    init(id: UUID, title: String, content: String, createdAt: Date, weather: Weather) {
-        self.id = UUID()
+    init(id: UUID = UUID(), title: String, content: String, createdAt: Date = .now, weather: Weather) {
+        self.id = id
         self.title = title
         self.content = content
-        self.createdAt = .now
+        self.createdAt = createdAt
         self.weather = weather
     }
 }
