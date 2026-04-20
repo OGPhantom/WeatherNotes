@@ -11,6 +11,7 @@ import Foundation
 enum NetworkError: Error, Equatable {
     case invalidURL
     case invalidResponse
+    case missingAPIKey
     case badStatusCode(Int)
     case decodingFailed
     case noWeatherData
