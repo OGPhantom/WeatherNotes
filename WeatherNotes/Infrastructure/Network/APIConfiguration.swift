@@ -9,13 +9,13 @@ import Foundation
 
 enum APIConfiguration {
     static func openWeatherAPIKey() throws -> String {
-        let rawValue =  Bundle.main.object(forInfoDictionaryKey: "OpenWeatehrAPIKey") as? String
+        let rawValue = Bundle.main.object(forInfoDictionaryKey: "OpenWeatherAPIKey") as? String
         let apiKey = rawValue?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
 
         guard !apiKey.isEmpty, !apiKey.contains("$(") else {
             throw NetworkError.missingAPIKey
         }
-        
+
         return apiKey
     }
 }
