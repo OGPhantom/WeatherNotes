@@ -17,14 +17,15 @@ struct NoteRow: View {
 
             noteInfo
 
-            Spacer(minLength: 12)
+            Spacer(minLength: 8)
 
-            temperature
+            temperatureBadge
         }
-        .contentShape(Rectangle())
-        .padding(20)
-        .background(rowBackground)
-        .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
+        .contentShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+        .padding(.leading, 12)
+        .padding(.trailing, 14)
+        .padding(.vertical, 14)
+        .background(CardBackground())
     }
 }
 
@@ -32,45 +33,45 @@ private extension NoteRow {
     var weatherIcon: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 8, style: .continuous)
-                .fill(note.weather.tint.opacity(0.16))
+                .fill(note.weather.tint.opacity(colorScheme == .dark ? 0.20 : 0.12))
 
             Image(systemName: note.weather.systemImageName)
-                .font(.system(size: 44 * 0.48, weight: .semibold))
+                .font(.system(size: 20, weight: .semibold))
                 .foregroundStyle(note.weather.tint)
                 .symbolRenderingMode(.hierarchical)
         }
-        .frame(width: 44, height: 44)
+        .frame(width: 40, height: 40)
         .accessibilityLabel(note.weather.conditionDescription)
     }
     
     var noteInfo: some View {
-        VStack(alignment: .leading, spacing: 2) {
+        VStack(alignment: .leading, spacing: 5) {
             Text(note.title)
                 .font(.system(size: 17, weight: .semibold))
                 .foregroundStyle(.primary)
                 .lineLimit(1)
 
-            Text(note.createdAt.formatted(.dateTime.day().month(.abbreviated).hour().minute()))
-                .font(.subheadline.weight(.medium))
+            Text(note.content.isEmpty ? "No details" : note.content)
+                .font(.footnote)
                 .foregroundStyle(.secondary)
                 .lineLimit(1)
         }
     }
 
-    var temperature: some View {
-        Text(note.weather.temperature.temperatureText)
-            .font(.system(size: 20, weight: .bold, design: .rounded))
-            .foregroundStyle(.primary)
-            .monospacedDigit()
-            .lineLimit(1)
-    }
+    var temperatureBadge: some View {
+        VStack(alignment: .trailing) {
+            Text(note.weather.temperature.temperatureText)
+                .font(.system(size: 20, weight: .semibold, design: .rounded))
+                .foregroundStyle(note.weather.tint)
+                .monospacedDigit()
+                .lineLimit(1)
 
-    var rowBackground: some ShapeStyle {
-        if colorScheme == .dark {
-            return Color.white.opacity(0.06)
+
+            Text(note.createdAt.formatted(.dateTime.day().month(.abbreviated).hour().minute()))
+                            .lineLimit(1)
+                            .font(.footnote)
+                            .foregroundStyle(.secondary)
         }
-
-        return Color(.secondarySystemGroupedBackground)
     }
 }
 

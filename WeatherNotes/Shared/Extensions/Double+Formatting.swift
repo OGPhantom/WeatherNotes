@@ -13,7 +13,8 @@ extension Double {
     }
 
     var temperatureText: String {
-        "\(roundedString)°"
+        let rounded = roundedString
+        return self > 0 ? "+\(rounded)°" : "\(rounded)°"
     }
 
     var percentageText: String {

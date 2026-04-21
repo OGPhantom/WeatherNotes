@@ -99,7 +99,7 @@ private extension AddNoteSheet {
                 .padding(8)
         }
         .padding(20)
-        .background(surfaceBackground)
+        .background(CardBackground())
     }
 
     private var content: some View {
@@ -120,17 +120,7 @@ private extension AddNoteSheet {
                 .padding(8)
         }
         .padding(20)
-        .background(surfaceBackground)
-    }
-
-    var surfaceBackground: some View {
-        RoundedRectangle(cornerRadius: 28, style: .continuous)
-            .fill(Color(.systemBackground).opacity(0.9))
-            .overlay(
-                RoundedRectangle(cornerRadius: 28, style: .continuous)
-                    .stroke(Color.primary.opacity(0.06), lineWidth: 1)
-            )
-            .shadow(color: Color.black.opacity(0.05), radius: 12, x: 0, y: 6)
+        .background(CardBackground())
     }
 }
 
