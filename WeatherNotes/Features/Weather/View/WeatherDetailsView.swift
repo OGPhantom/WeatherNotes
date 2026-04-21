@@ -10,17 +10,9 @@ import SwiftUI
 struct WeatherDetailsView: View {
     let weather: Weather
 
-    private let metricColumns = [
-        GridItem(.flexible(), spacing: 10),
-        GridItem(.flexible(), spacing: 10)
-    ]
-
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 14) {
-                heroSection
-                metricsSection
-            }
+            WeatherDetailsContent(weather: weather)
             .padding(.horizontal, 20)
             .padding(.top, 16)
             .padding(.bottom, 28)
@@ -29,7 +21,23 @@ struct WeatherDetailsView: View {
     }
 }
 
-private extension WeatherDetailsView {
+struct WeatherDetailsContent: View {
+    let weather: Weather
+
+    private let metricColumns = [
+        GridItem(.flexible(), spacing: 10),
+        GridItem(.flexible(), spacing: 10)
+    ]
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 14) {
+            heroSection
+            metricsSection
+        }
+    }
+}
+
+private extension WeatherDetailsContent {
     var heroSection: some View {
         ZStack(alignment: .bottomTrailing) {
             VStack(alignment: .leading, spacing: 18) {

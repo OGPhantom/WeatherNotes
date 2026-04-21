@@ -33,7 +33,7 @@ enum CityCatalog {
     }
 
     private static let fallbackCities = [
-        WeatherCity(id: "kyiv", name: "Kyiv", country: "Ukraine", latitude: 50.4501, longitude: 30.5234),
+        WeatherCity(id: "kyiv", name: "Kyiv", country: "Ukraine", latitude: 50.450001, longitude: 30.523333),
         WeatherCity(id: "lviv", name: "Lviv", country: "Ukraine", latitude: 49.8397, longitude: 24.0297),
         WeatherCity(id: "odesa", name: "Odesa", country: "Ukraine", latitude: 46.4825, longitude: 30.7233)
     ]

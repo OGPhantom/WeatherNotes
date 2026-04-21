@@ -31,9 +31,9 @@ struct NotesView: View {
             .sheet(isPresented: $showingAdd, content: {
                 AddNoteSheet()
             })
-            //            .sheet(item: detailsOfNote) { note in
-            //                EditNoteSheet(note: note)
-            //            }
+            .sheet(item: $detailsOfNote) { note in
+                NoteDetailsView(note: note)
+            }
             .searchable(text: $viewModel.searchQuery, placement: .navigationBarDrawer(displayMode: .always), prompt: "Searсh notes")
         }
         .overlay(alignment: .bottomTrailing) { button }
@@ -71,20 +71,16 @@ private extension NotesView {
     var notesList: some View {
         ScrollView {
             ForEach(filteredNotes) { note in
-                NoteRow(note: note)
-                    .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
-                    .listRowSeparator(.hidden)
-                    .background(Color.clear)
+                Button {
+                    detailsOfNote = note
+                } label: {
+                    NoteRow(note: note)
+                }
+                .buttonStyle(.plain)
             }
             .padding(.horizontal, 20)
             .padding(.top, 16)
             .padding(.bottom, 120)
-            //            .onDelete { indexSet in
-            //                for index in indexSet {
-            //                    let note = filteredNotes[index]
-            //                    viewModel.deleteNote(note, context: modelContext)
-            //                }
-            //            }
         }
         .scrollIndicators(.hidden)
     }

@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct Weather: Codable {
-    let cityName: String
+    var cityName: String
     let conditionCode: Int
     let conditionTitle: String
     let conditionDescription: String

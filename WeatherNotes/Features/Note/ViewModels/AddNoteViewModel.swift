@@ -29,10 +29,11 @@ final class AddNoteViewModel {
         }
 
         do {
-            let weather = try await weatherService.fetchWeather(
+            var weather = try await weatherService.fetchWeather(
                 latitude: city.latitude,
                 longitude: city.longitude
             )
+            weather.cityName = city.name
 
             let note = Note(
                 title: title,
