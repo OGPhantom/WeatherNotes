@@ -18,7 +18,8 @@ final class NoteViewModel {
 
         let filteredNotes = notes.filter {
             $0.title.lowercased().contains(query) ||
-            $0.content.lowercased().contains(query)
+            $0.content.lowercased().contains(query) ||
+            $0.weather.cityName.lowercased().contains(query)
         }
 
         return filteredNotes

@@ -38,14 +38,6 @@ private extension SettingsView {
         }
     }
 
-    var selectedCityID: Binding<String> {
-        Binding {
-            settingsStore.selectedCityID
-        } set: { cityID in
-            settingsStore.selectedCityID = cityID
-        }
-    }
-
     var selectedCity: WeatherCity {
         settingsStore.selectedCity
     }
@@ -67,11 +59,8 @@ private extension SettingsView {
     }
 
     var citySection: some View {
-        Picker(selection: selectedCityID) {
-            ForEach(CityCatalog.cities) { city in
-                Text(city.displayName)
-                    .tag(city.id)
-            }
+        NavigationLink {
+            WeatherCityView()
         } label: {
             HStack(spacing: 14) {
                 ZStack {
@@ -97,7 +86,7 @@ private extension SettingsView {
 
                 Spacer(minLength: 12)
 
-                Image(systemName: "chevron.up.chevron.down")
+                Image(systemName: "chevron.right")
                     .font(.footnote.weight(.semibold))
                     .foregroundStyle(.secondary)
             }
@@ -105,7 +94,6 @@ private extension SettingsView {
             .padding(18)
             .background(CardBackground())
         }
-        .pickerStyle(.menu)
         .buttonStyle(.plain)
         .frame(maxWidth: .infinity)
     }
