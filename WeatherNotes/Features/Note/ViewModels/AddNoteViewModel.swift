@@ -20,7 +20,7 @@ final class AddNoteViewModel {
     }
 
     @MainActor
-    func saveNote(title: String, content: String, context: ModelContext) async -> Bool {
+    func saveNote(title: String, content: String, city: WeatherCity, context: ModelContext) async -> Bool {
         isLoading = true
         errorMessage = nil
 
@@ -30,8 +30,8 @@ final class AddNoteViewModel {
 
         do {
             let weather = try await weatherService.fetchWeather(
-                latitude: 50.4501,
-                longitude: 30.5234
+                latitude: city.latitude,
+                longitude: city.longitude
             )
 
             let note = Note(

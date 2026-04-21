@@ -11,6 +11,8 @@ import SwiftData
 struct AddNoteSheet: View {
     @Environment(\.modelContext) var modelContext
     @Environment(\.dismiss) var dismiss
+    @Environment(SettingsStore.self) private var settingsStore
+
     @State private var titleOfNote: String = ""
     @State private var contentOfNote: String = ""
 
@@ -55,6 +57,10 @@ private extension AddNoteSheet {
         !titleOfNote.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
 
+    private var selectedCity: WeatherCity {
+        settingsStore.selectedCity
+    }
+
     private var toolbar: some ToolbarContent {
         Group {
             ToolbarItem(placement: .cancellationAction) {
@@ -73,6 +79,7 @@ private extension AddNoteSheet {
                         let didSave = await viewModel.saveNote(
                             title: titleOfNote,
                             content: contentOfNote,
+                            city: selectedCity,
                             context: modelContext
                         )
 
@@ -126,4 +133,5 @@ private extension AddNoteSheet {
 
 #Preview {
     AddNoteSheet()
+        .environment(SettingsStore())
 }

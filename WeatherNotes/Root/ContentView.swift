@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct ContentView: View {
+    @Environment(SettingsStore.self) private var settingsStore
+
     var body: some View {
         TabView {
             NotesView()
@@ -15,15 +17,17 @@ struct ContentView: View {
                     Label("Notes", systemImage: "list.bullet.rectangle")
                 }
 
-//            SettingsView()
-//                .tabItem {
-//                    Label("Settings", systemImage: "gear.circle")
-//                }
+            SettingsView()
+                .tabItem {
+                    Label("Settings", systemImage: "gear.circle")
+                }
         }
         .tint(.accent)
+        .preferredColorScheme(settingsStore.appTheme.colorScheme)
     }
 }
 
 #Preview {
     ContentView()
+        .environment(SettingsStore())
 }
