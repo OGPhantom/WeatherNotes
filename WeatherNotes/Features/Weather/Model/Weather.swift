@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct Weather: Codable {
     let cityName: String
@@ -54,6 +55,25 @@ struct Weather: Codable {
             return "cloud.sun.fill"
         default:
             return "cloud.fill"
+        }
+    }
+
+    var tint: Color {
+        switch conditionCode {
+        case 200...232:
+            return .purple
+        case 300...531:
+            return .blue
+        case 600...622:
+            return .cyan
+        case 701...781:
+            return .gray
+        case 800:
+            return .orange
+        case 801...804:
+            return .teal
+        default:
+            return .accentColor
         }
     }
 
