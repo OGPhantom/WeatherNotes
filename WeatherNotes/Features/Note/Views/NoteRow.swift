@@ -22,7 +22,7 @@ struct NoteRow: View {
             temperature
         }
         .contentShape(Rectangle())
-        .padding(14)
+        .padding(20)
         .background(rowBackground)
         .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
     }

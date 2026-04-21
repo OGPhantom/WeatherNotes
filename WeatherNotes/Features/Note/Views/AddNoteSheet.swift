@@ -6,21 +6,46 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct AddNoteSheet: View {
+    @Environment(\.modelContext) var modelContext
     @Environment(\.dismiss) var dismiss
     @State private var titleOfNote: String = ""
     @State private var contentOfNote: String = ""
 
+    @State private var viewModel = AddNoteViewModel()
+
     var body: some View {
         NavigationStack {
-            Form {
-                title
+            ScrollView {
+                VStack(spacing: 16) {
+                    title
 
-                content
+                    content
+                }
+                .padding()
             }
+            .background(AppBackground())
             .navigationTitle("Add a note")
             .toolbar { toolbar }
+            .alert(
+                "Couldn't save note",
+                isPresented: Binding(
+                    get: { viewModel.errorMessage != nil },
+                    set: { isPresented in
+                        if !isPresented {
+                            viewModel.errorMessage = nil
+                        }
+                    }
+                )
+            ) {
+                Button("OK", role: .cancel) {
+                    viewModel.errorMessage = nil
+                }
+            } message: {
+                Text(viewModel.errorMessage ?? "Please try again.")
+            }
         }
     }
 }
@@ -39,24 +64,42 @@ private extension AddNoteSheet {
                     Text("Cancel")
                         .font(.system(size: 18, weight: .semibold))
                 }
+                .disabled(viewModel.isLoading)
             }
 
             ToolbarItem(placement: .confirmationAction) {
                 Button {
-//                    viewModel.saveNote(text: text, context: modelContext)
-                    dismiss()
+                    Task {
+                        let didSave = await viewModel.saveNote(
+                            title: titleOfNote,
+                            content: contentOfNote,
+                            context: modelContext
+                        )
+
+                        if didSave {
+                            dismiss()
+                        }
+                    }
                 } label: {
-                    Text("Done")
-                        .font(.system(size: 18, weight: .semibold))
+                    if viewModel.isLoading {
+                        ProgressView()
+                    } else {
+                        Text("Done")
+                            .font(.system(size: 18, weight: .semibold))
+                    }
                 }
-                .disabled(!canSave)
+                .disabled(!canSave || viewModel.isLoading)
             }
         }
     }
 
     private var title: some View {
-        TextField("Note Title", text: $titleOfNote)
-            .padding(8)
+        VStack(alignment: .leading){
+            TextField("Note Title", text: $titleOfNote)
+                .padding(8)
+        }
+        .padding(20)
+        .background(surfaceBackground)
     }
 
     private var content: some View {
@@ -66,7 +109,7 @@ private extension AddNoteSheet {
                     .font(.system(size: 15))
                     .foregroundStyle(.secondary.opacity(0.5))
                     .padding(.top, 14)
-                    .padding(.leading, 8)
+                    .padding(.leading, 14)
             }
 
             TextEditor(text: $contentOfNote)
@@ -76,6 +119,18 @@ private extension AddNoteSheet {
                 .foregroundStyle(.primary)
                 .padding(8)
         }
+        .padding(20)
+        .background(surfaceBackground)
+    }
+
+    var surfaceBackground: some View {
+        RoundedRectangle(cornerRadius: 28, style: .continuous)
+            .fill(Color(.systemBackground).opacity(0.9))
+            .overlay(
+                RoundedRectangle(cornerRadius: 28, style: .continuous)
+                    .stroke(Color.primary.opacity(0.06), lineWidth: 1)
+            )
+            .shadow(color: Color.black.opacity(0.05), radius: 12, x: 0, y: 6)
     }
 }
 

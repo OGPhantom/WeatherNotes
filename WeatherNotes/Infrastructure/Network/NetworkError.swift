@@ -16,3 +16,22 @@ enum NetworkError: Error, Equatable {
     case decodingFailed
     case noWeatherData
 }
+
+extension NetworkError: LocalizedError {
+    var errorDescription: String? {
+        switch self {
+        case .invalidURL:
+            return "The weather request URL is invalid."
+        case .invalidResponse:
+            return "The weather service returned an invalid response."
+        case .missingAPIKey:
+            return "OpenWeather API key is missing. Check the app configuration."
+        case .badStatusCode(let statusCode):
+            return "The weather service returned status code \(statusCode)."
+        case .decodingFailed:
+            return "Couldn't read the weather response."
+        case .noWeatherData:
+            return "The weather service didn't return weather data."
+        }
+    }
+}

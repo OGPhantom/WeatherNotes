@@ -286,7 +286,6 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				OPEN_WEATHER_API_KEY = 2573dd7e3eff5e0df7772c0141bd1da3;
 				PRODUCT_BUNDLE_IDENTIFIER = phantom.WeatherNotes;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -322,7 +321,6 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				OPEN_WEATHER_API_KEY = 2573dd7e3eff5e0df7772c0141bd1da3;
 				PRODUCT_BUNDLE_IDENTIFIER = phantom.WeatherNotes;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
